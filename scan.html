@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vehicle Contact | CarConnect QR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            padding: 25px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: #07090d;
+
+            color: #f4f6fa;
+
+            font-family: Inter, Arial, sans-serif;
+
+        }
+
+
+        .container {
+
+            width: min(430px, 100%);
+
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            font-weight: 800;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .logo span {
+
+            display: inline-grid;
+
+            place-items: center;
+
+            width: 32px;
+
+            height: 32px;
+
+            margin-right: 8px;
+
+            background: #ffffff;
+
+            color: #080a0e;
+
+            border-radius: 9px;
+
+            font-size: 10px;
+
+        }
+
+
+        .card {
+
+            padding: 25px;
+
+            background: #0f141b;
+
+            border: 1px solid #2a303a;
+
+            border-radius: 24px;
+
+            box-shadow: 0 30px 80px #000b;
+
+        }
+
+
+        .top {
+
+            text-align: center;
+
+        }
+
+
+        .car {
+
+            font-size: 50px;
+
+        }
+
+
+        .eyebrow {
+
+            margin-top: 8px;
+
+            color: #7e8999;
+
+            font-size: 9px;
+
+            letter-spacing: 1.8px;
+
+            font-weight: 800;
+
+        }
+
+
+        h1 {
+
+            margin: 8px 0;
+
+            font-size: 26px;
+
+        }
+
+
+        .description {
+
+            color: #747f8e;
+
+            font-size: 11px;
+
+            margin-bottom: 22px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .vehicle {
+
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+
+            padding: 13px;
+
+            background: #171c24;
+
+            border-radius: 12px;
+
+            text-align: left;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .vehicle span {
+
+            font-size: 25px;
+
+        }
+
+
+        .vehicle strong {
+
+            display: block;
+
+            font-size: 11px;
+
+        }
+
+
+        .vehicle small {
+
+            display: block;
+
+            margin-top: 2px;
+
+            color: #687383;
+
+            font-size: 8px;
+
+        }
+
+
+        .question {
+
+            color: #929cab;
+
+            font-size: 11px;
+
+        }
+
+
+        .actions button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin: 5px 0;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            background: #151a22;
+
+            color: #f1f4f8;
+
+            border: 1px solid #292f39;
+
+            border-radius: 11px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            font-size: 11px;
+
+        }
+
+
+        .actions button:hover {
+
+            background: #1d232d;
+
+        }
+
+
+        .actions button:disabled {
+
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+        }
+
+
+        .actions button span {
+
+            font-size: 18px;
+
+        }
+
+
+        .arrow {
+
+            margin-left: auto;
+
+            color: #687383;
+
+        }
+
+
+        .privacy {
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            color: #667181;
+
+            font-size: 9px;
+
+        }
+
+
+        .success {
+
+            display: none;
+
+            text-align: center;
+
+        }
+
+
+        .success-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            display: grid;
+
+            place-items: center;
+
+            margin: 10px auto 20px;
+
+            background: #17231d;
+
+            border: 1px solid #284334;
+
+            border-radius: 50%;
+
+            color: #7de2a8;
+
+            font-size: 28px;
+
+        }
+
+
+        .success h2 {
+
+            font-size: 24px;
+
+        }
+
+
+        .success p {
+
+            color: #778291;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .error {
+
+            display: none;
+
+            text-align: center;
+
+        }
+
+
+        .error-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .error p {
+
+            color: #778291;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 12px 18px;
+
+            background: #f3f5f8;
+
+            color: #080a0e;
+
+            border-radius: 10px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="logo">
+
+        <span>CQ</span>
+
+        CarConnect QR
+
+    </div>
+
+
+    <div class="card">
+
+
+        <!-- ================= MAIN SCREEN ================= -->
+
+        <div id="mainScreen" class="top">
+
+
+            <div class="car">
+                🚗
+            </div>
+
+
+            <div class="eyebrow">
+                VEHICLE CONTACT
+            </div>
+
+
+            <h1 id="vehicleNumber">
+                Loading...
+            </h1>
+
+
+            <p class="description">
+
+                Choose what you need to report.
+                The owner's personal number stays private.
+
+            </p>
+
+
+            <div class="vehicle">
+
+                <span>
+                    🛡️
+                </span>
+
+                <div>
+
+                    <strong>
+                        Private Contact Enabled
+                    </strong>
+
+                    <small>
+                        Secure alert • No number shown
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <p class="question">
+                How can we help?
+            </p>
+
+
+            <div class="actions">
+
+
+                <button data-alert="Wrong Parking">
+
+                    <span>🅿️</span>
+
+                    Wrong Parking
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button data-alert="Lights are ON">
+
+                    <span>💡</span>
+
+                    Lights are ON
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button data-alert="Door / Window Open">
+
+                    <span>🚪</span>
+
+                    Door / Window Open
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button data-alert="Accident / Damage">
+
+                    <span>⚠️</span>
+
+                    Accident / Damage
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button data-alert="Emergency">
+
+                    <span>🚨</span>
+
+                    Emergency
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button data-alert="Other">
+
+                    <span>💬</span>
+
+                    Other
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+            <div class="privacy">
+
+                🔒 Your personal number is never displayed.
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= SUCCESS SCREEN ================= -->
+
+        <div id="successScreen" class="success">
+
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <div class="eyebrow">
+                ALERT SENT
+            </div>
+
+
+            <h2>
+                Thanks for helping.
+            </h2>
+
+
+            <p id="successMessage">
+
+                Your alert has been recorded securely.
+
+            </p>
+
+
+            <a
+                href="index.html"
+                class="back"
+            >
+
+                Create Your Own QR
+
+            </a>
+
+
+        </div>
+
+
+        <!-- ================= ERROR SCREEN ================= -->
+
+        <div id="errorScreen" class="error">
+
+
+            <div class="error-icon">
+                ⚠️
+            </div>
+
+
+            <div class="eyebrow">
+                QR NOT FOUND
+            </div>
+
+
+            <h2>
+                Invalid QR
+            </h2>
+
+
+            <p>
+
+                This QR code is invalid, inactive,
+                or no longer available.
+
+            </p>
+
+
+            <a
+                href="index.html"
+                class="back"
+            >
+
+                Go to CarConnect QR
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
+
+const SUPABASE_URL =
+    "https://bannrfwcahnvmsrqlnaz.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_ZC5CnukY1WzRYnLpQF92Sw_nGKZ8Eqh";
+
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
+   GLOBAL DATA
+========================================= */
+
+let currentQR = null;
+
+let currentVehicle = null;
+
+
+/* =========================================
+   SHOW ERROR
+========================================= */
+
+function showError() {
+
+    document.getElementById(
+        "mainScreen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "successScreen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "errorScreen"
+    ).style.display = "block";
+
+}
+
+
+/* =========================================
+   GET QR TOKEN
+========================================= */
+
+function getQRToken() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    return params.get("token");
+
+}
+
+
+/* =========================================
+   LOAD VEHICLE
+========================================= */
+
+async function loadVehicle() {
+
+    const token =
+        getQRToken();
+
+
+    /* ---------- DEMO ---------- */
+
+    if (!token || token === "demo") {
+
+        document.getElementById(
+            "vehicleNumber"
+        ).textContent =
+            "Demo Vehicle";
+
+        return;
+
+    }
+
+
+    /* ---------- SECURE RPC LOOKUP ---------- */
+
+    const {
+        data: vehicleData,
+        error: vehicleError
+    } = await supabaseClient
+        .rpc(
+            "get_vehicle_by_qr",
+            {
+                p_token: token
+            }
+        );
+
+
+    /* ---------- CHECK RESULT ---------- */
+
+    if (
+        vehicleError ||
+        !vehicleData ||
+        vehicleData.length === 0
+    ) {
+
+        console.error(
+            "QR LOOKUP ERROR:",
+            vehicleError
+        );
+
+        showError();
+
+        return;
+
+    }
+
+
+    /* ---------- SAVE QR ---------- */
+
+    currentQR = {
+
+        id: vehicleData[0].qr_id
+
+    };
+
+
+    /* ---------- SAVE VEHICLE ---------- */
+
+    currentVehicle =
+        vehicleData[0];
+
+
+    /* ---------- DISPLAY VEHICLE ---------- */
+
+    document.getElementById(
+        "vehicleNumber"
+    ).textContent =
+        vehicleData[0].vehicle_number ||
+        "Vehicle";
+
+}
+
+
+/* =========================================
+   SEND ALERT
+========================================= */
+
+async function sendAlert(alertType) {
+
+    if (!currentQR) {
+
+        alert(
+            "Vehicle information is not available."
+        );
+
+        return;
+
+    }
+
+
+    /* ---------- DISABLE BUTTONS ---------- */
+
+    const buttons =
+        document.querySelectorAll(
+            ".actions button"
+        );
+
+
+    buttons.forEach(
+        function(button) {
+
+            button.disabled = true;
+
+        }
+    );
+
+
+    /* ---------- INSERT ALERT ---------- */
+
+    const {
+        error
+    } = await supabaseClient
+        .from("alerts")
+        .insert({
+
+            qr_id:
+                currentQR.id,
+
+            alert_type:
+                alertType,
+
+            message:
+                alertType +
+                " alert sent by vehicle scanner."
+
+        });
+
+
+    /* ---------- ERROR ---------- */
+
+    if (error) {
+
+        console.error(
+            "ALERT ERROR:",
+            error
+        );
+
+
+        buttons.forEach(
+            function(button) {
+
+                button.disabled = false;
+
+            }
+        );
+
+
+        alert(
+            "Alert could not be sent. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    /* ---------- SUCCESS ---------- */
+
+    document.getElementById(
+        "mainScreen"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "successScreen"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "successMessage"
+    ).textContent =
+
+        `"${alertType}" alert has been recorded securely for this vehicle.`;
+
+}
+
+
+/* =========================================
+   BUTTON EVENTS
+========================================= */
+
+const buttons =
+    document.querySelectorAll(
+        ".actions button"
+    );
+
+
+buttons.forEach(
+    function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                const alertType =
+                    button.dataset.alert;
+
+
+                sendAlert(
+                    alertType
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================
+   START
+========================================= */
+
+loadVehicle();
+
+</script>
+
+
+</body>
+
+</html>

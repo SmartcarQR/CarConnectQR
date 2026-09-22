@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        CarConnect QR | Smart Vehicle Contact
+    </title>
+
+    <meta
+        name="description"
+        content="Create a smart vehicle QR code and let people contact you without revealing your personal number."
+    >
+
+    <!-- Google Font -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a
+        href="#"
+        class="logo"
+    >
+
+        <span class="logo-box">
+            CQ
+        </span>
+
+        <span>
+            CarConnect <strong>QR</strong>
+        </span>
+
+    </a>
+
+
+    <nav>
+
+        <a href="#how">
+            How it works
+        </a>
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a
+            href="#create"
+            class="nav-button"
+        >
+            Create QR
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+
+            <span></span>
+
+            SMART VEHICLE CONTACT
+
+        </div>
+
+
+        <h1>
+
+            One QR.<br>
+
+            <span>
+                Stay connected.
+            </span><br>
+
+            Stay private.
+
+        </h1>
+
+
+        <p>
+
+            Put a smart QR on your car.
+            Anyone can alert you about parking,
+            lights, an open door or an emergency —
+            without seeing your personal number.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#create"
+                class="primary-button"
+            >
+
+                Create My QR
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="#how"
+                class="secondary-button"
+            >
+
+                See How It Works
+
+            </a>
+
+        </div>
+
+
+        <div class="hero-stats">
+
+            <div>
+
+                <strong>
+                    100%
+                </strong>
+
+                <small>
+                    Number Privacy
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    1 Scan
+                </strong>
+
+                <small>
+                    No App Required
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    24/7
+                </strong>
+
+                <small>
+                    Vehicle Alerts
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QR VISUAL -->
+
+    <div class="hero-visual">
+
+        <div class="glow"></div>
+
+
+        <div class="qr-preview">
+
+            <div class="qr-header">
+
+                <span>
+                    VEHICLE CONTACT
+                </span>
+
+                <span class="active">
+                    ● ACTIVE
+                </span>
+
+            </div>
+
+
+            <div
+                id="heroQR"
+                class="qr-display"
+            >
+
+                <span>
+                    QR
+                </span>
+
+            </div>
+
+
+            <p>
+                Scan to contact owner
+            </p>
+
+
+            <div class="privacy">
+
+                ✓ Phone number stays private
+
+            </div>
+
+        </div>
+
+
+        <div class="floating-alert alert-one">
+
+            <span>
+                🅿️
+            </span>
+
+            <div>
+
+                <strong>
+                    Wrong Parking
+                </strong>
+
+                <small>
+                    Alert sent securely
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="floating-alert alert-two">
+
+            <span>
+                💡
+            </span>
+
+            <div>
+
+                <strong>
+                    Lights are ON
+                </strong>
+
+                <small>
+                    2 min ago
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= USE CASES ================= -->
+
+<section class="use-cases">
+
+    <div>
+
+        <strong>
+            Cars
+        </strong>
+
+        <span>
+            Parking • Lights • Door • Emergency
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            Bikes
+        </strong>
+
+        <span>
+            Same QR • Same Privacy
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            Coming Soon
+        </strong>
+
+        <span>
+            Pet • Bag • Bicycle • Home
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section
+    class="section"
+    id="how"
+>
+
+    <div class="section-title">
+
+        <span>
+            HOW IT WORKS
+        </span>
+
+        <h2>
+
+            Simple for you.<br>
+
+            Useful for everyone.
+
+        </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <small>
+                01
+            </small>
+
+            <div class="step-icon">
+                ＋
+            </div>
+
+            <h3>
+                Create
+            </h3>
+
+            <p>
+
+                Add your mobile number
+                and vehicle details.
+
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <small>
+                02
+            </small>
+
+            <div class="step-icon">
+                ▦
+            </div>
+
+            <h3>
+                Generate
+            </h3>
+
+            <p>
+
+                Get your unique
+                vehicle QR code.
+
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <small>
+                03
+            </small>
+
+            <div class="step-icon">
+                ↗
+            </div>
+
+            <h3>
+                Stick
+            </h3>
+
+            <p>
+
+                Place the QR on your
+                dashboard or window.
+
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <small>
+                04
+            </small>
+
+            <div class="step-icon">
+                ✓
+            </div>
+
+            <h3>
+                Get Alerted
+            </h3>
+
+            <p>
+
+                People can send you
+                secure vehicle alerts.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section
+    class="features"
+    id="features"
+>
+
+
+    <div class="phone-preview">
+
+        <div class="phone">
+
+            <div class="phone-notch"></div>
+
+
+            <h3>
+                Vehicle Contact
+            </h3>
+
+
+            <div class="vehicle-box">
+
+                <span>
+                    🚗
+                </span>
+
+                <div>
+
+                    <strong>
+                        DL 01 AB 1234
+                    </strong>
+
+                    <small>
+                        Owner contact protected
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <p class="question">
+                How can we help?
+            </p>
+
+
+            <button>
+
+                🅿️
+
+                <span>
+                    Wrong Parking
+                </span>
+
+                →
+
+            </button>
+
+
+            <button>
+
+                💡
+
+                <span>
+                    Lights are ON
+                </span>
+
+                →
+
+            </button>
+
+
+            <button>
+
+                🚪
+
+                <span>
+                    Door / Window Open
+                </span>
+
+                →
+
+            </button>
+
+
+            <button>
+
+                ⚠️
+
+                <span>
+                    Accident / Damage
+                </span>
+
+                →
+
+            </button>
+
+
+            <button>
+
+                🚨
+
+                <span>
+                    Emergency
+                </span>
+
+                →
+
+            </button>
+
+
+            <div class="phone-private">
+
+                🔒 Your number is never shown
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="feature-content">
+
+        <span>
+            BUILT FOR REAL LIFE
+        </span>
+
+
+        <h2>
+
+            Not just a QR.<br>
+
+            It's a private contact layer.
+
+        </h2>
+
+
+        <p>
+
+            Instead of putting your phone number
+            inside the QR, the QR opens a secure
+            web page.
+
+        </p>
+
+
+        <div class="feature-list">
+
+
+            <div>
+
+                <strong>
+                    Dynamic QR
+                </strong>
+
+                <small>
+
+                    Update your details without
+                    printing a new sticker.
+
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Privacy First
+                </strong>
+
+                <small>
+
+                    Your personal number stays hidden.
+
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    No App Required
+                </strong>
+
+                <small>
+
+                    Scanner can use the website
+                    directly from their phone.
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CREATE QR ================= -->
+
+<section
+    class="create-section"
+    id="create"
+>
+
+
+    <div class="create-card">
+
+
+        <div class="create-info">
+
+            <span>
+                START FREE
+            </span>
+
+
+            <h2>
+
+                Create your<br>
+
+                vehicle QR.
+
+            </h2>
+
+
+            <p>
+
+                Enter your details and create
+                your first smart vehicle QR.
+
+            </p>
+
+
+            <div class="check-list">
+
+                <span>
+                    ✓ No App
+                </span>
+
+                <span>
+                    ✓ Number Hidden
+                </span>
+
+                <span>
+                    ✓ Download QR
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <form id="qrForm">
+
+
+            <!-- VEHICLE NUMBER -->
+
+            <label>
+
+                Vehicle Number
+
+                <input
+                    id="vehicleNumber"
+                    type="text"
+                    maxlength="16"
+                    placeholder="Vehicle Number (Optional)"
+                >
+
+            </label>
+
+
+            <!-- VEHICLE TYPE -->
+
+            <label>
+
+                Vehicle Type
+
+                <select id="vehicleType">
+
+                    <option value="">
+                        Vehicle Type (Optional)
+                    </option>
+
+                    <option value="Car">
+                        Car
+                    </option>
+
+                    <option value="Bike">
+                        Bike
+                    </option>
+
+                    <option value="Scooter">
+                        Scooter
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <!-- OWNER NAME -->
+
+            <label>
+
+                Owner Name
+
+                <input
+                    type="text"
+                    id="ownerName"
+                    placeholder="Your name"
+                    maxlength="40"
+                    required
+                >
+
+            </label>
+
+
+            <!-- MOBILE NUMBER -->
+
+            <label>
+
+                Mobile Number
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="10 digit mobile number"
+                    maxlength="10"
+                    inputmode="numeric"
+                    required
+                >
+
+            </label>
+
+
+            <!-- GENERATE BUTTON -->
+
+            <button
+                type="submit"
+                class="primary-button full-width"
+            >
+
+                Generate My QR
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+            <small class="form-note">
+
+                Your phone number is NOT stored inside the QR.
+
+            </small>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section
+    class="result-section hidden"
+    id="result"
+>
+
+
+    <div class="result-card">
+
+
+        <div>
+
+            <span>
+                YOUR QR IS READY
+            </span>
+
+
+            <h2 id="resultTitle">
+
+                Vehicle QR
+
+            </h2>
+
+
+            <p>
+
+                Your QR is ready.
+                Download it and test the scan page.
+
+            </p>
+
+
+            <div class="result-buttons">
+
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="downloadQR"
+                >
+
+                    Download QR
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="copyLink"
+                >
+
+                    Copy Scan Link
+
+                </button>
+
+
+                <a
+                    href="#"
+                    class="secondary-button"
+                    id="testScan"
+                    target="_blank"
+                    rel="noopener"
+                >
+
+                    Test Scan
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="generatedQR"
+            class="generated-qr"
+        ></div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= FINAL CTA ================= -->
+
+<section class="final-cta">
+
+    <span>
+        THE BIGGER IDEA
+    </span>
+
+
+    <h2>
+
+        One QR ecosystem.<br>
+
+        Car today. Everything tomorrow.
+
+    </h2>
+
+
+    <p>
+
+        Vehicle • Bike • Pet • Bag • Bicycle • Home
+
+    </p>
+
+
+    <a
+        href="#create"
+        class="primary-button"
+    >
+
+        Create Your QR →
+
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <span>
+        © 2026 CarConnect QR
+    </span>
+
+    <span>
+        Smart Contact • Private By Design
+    </span>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- QR CODE LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- CARCONNECT QR JAVASCRIPT -->
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
