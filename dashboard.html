@@ -1916,7 +1916,107 @@
     </div>
 
 </div>
+<!-- EDIT VEHICLE MODAL -->
 
+<div id="editVehicleModal" class="qr-modal hidden">
+
+    <div class="qr-modal-card">
+
+        <button
+            class="qr-close"
+            onclick="closeEditVehicle()"
+        >
+            ×
+        </button>
+
+        <div class="small-label">
+            VEHICLE SETTINGS
+        </div>
+
+        <h2 style="margin-bottom:8px;">
+            Edit Vehicle
+        </h2>
+
+        <p class="qr-description">
+            Update your vehicle details below.
+        </p>
+
+        <div
+            style="
+                display:grid;
+                gap:11px;
+                margin-top:22px;
+                text-align:left;
+            "
+        >
+
+            <input
+                type="text"
+                id="editVehicleNumber"
+                placeholder="Vehicle Number"
+            >
+
+            <select id="editVehicleType">
+
+                <option value="">
+                    Vehicle Type
+                </option>
+
+                <option value="Car">
+                    Car
+                </option>
+
+                <option value="Bike">
+                    Bike
+                </option>
+
+                <option value="Scooter">
+                    Scooter
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+            <input
+                type="text"
+                id="editVehicleModel"
+                placeholder="Vehicle Model"
+            >
+
+        </div>
+
+        <div
+            class="qr-actions"
+            style="margin-top:20px;"
+        >
+
+            <button
+                class="secondary-btn"
+                onclick="closeEditVehicle()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="saveEditedVehicle()"
+            >
+                Save Changes
+            </button>
+
+        </div>
+
+        <p
+            id="editVehicleMessage"
+            class="qr-message"
+        ></p>
+
+    </div>
+
+</div>
 
 <!-- =========================
      QR MODAL
