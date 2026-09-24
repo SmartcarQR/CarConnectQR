@@ -1804,7 +1804,118 @@
 
 
 </main>
+<!-- =========================
+     EDIT VEHICLE MODAL
+========================= -->
 
+<div
+    id="editVehicleModal"
+    class="qr-modal hidden"
+>
+
+    <div class="qr-modal-card">
+
+        <button
+            class="qr-close"
+            onclick="closeEditVehicle()"
+        >
+            ×
+        </button>
+
+        <div class="small-label">
+            VEHICLE SETTINGS
+        </div>
+
+        <h2 style="margin-bottom:8px;">
+            Edit Vehicle
+        </h2>
+
+        <p class="qr-description">
+            Update your vehicle details below.
+        </p>
+
+
+        <div
+            style="
+                display:grid;
+                gap:11px;
+                margin-top:22px;
+                text-align:left;
+            "
+        >
+
+            <input
+                type="text"
+                id="editVehicleNumber"
+                placeholder="Vehicle Number"
+            >
+
+
+            <select id="editVehicleType">
+
+                <option value="">
+                    Vehicle Type
+                </option>
+
+                <option value="Car">
+                    Car
+                </option>
+
+                <option value="Bike">
+                    Bike
+                </option>
+
+                <option value="Scooter">
+                    Scooter
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <input
+                type="text"
+                id="editVehicleModel"
+                placeholder="Vehicle Model"
+            >
+
+        </div>
+
+
+        <div
+            class="qr-actions"
+            style="margin-top:20px;"
+        >
+
+            <button
+                class="secondary-btn"
+                onclick="closeEditVehicle()"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="primary-btn"
+                onclick="saveEditedVehicle()"
+            >
+                Save Changes
+            </button>
+
+        </div>
+
+
+        <p
+            id="editVehicleMessage"
+            class="qr-message"
+        ></p>
+
+    </div>
+
+</div>
 
 
 <!-- =========================
@@ -2718,9 +2829,10 @@ async function createQRForVehicle(
    EDIT VEHICLE
 ========================= */
 
-async function editVehicle(
-    vehicleId
-){
+let editingVehicleId = null;
+
+
+async function editVehicle(vehicleId){
 
     const {
         data: vehicle,
@@ -2742,99 +2854,136 @@ async function editVehicle(
 
     if(error || !vehicle){
 
-        console.error(
-            error
-        );
-
+        console.error(error);
 
         alert(
             "Vehicle could not be found."
         );
-
 
         return;
 
     }
 
 
-    const newNumber =
-        prompt(
+    editingVehicleId =
+        vehicleId;
 
-            "Vehicle Number:",
 
-            vehicle.vehicle_number ||
-            ""
+    document.getElementById(
+        "editVehicleNumber"
+    ).value =
+        vehicle.vehicle_number || "";
 
+
+    document.getElementById(
+        "editVehicleType"
+    ).value =
+        vehicle.vehicle_type || "";
+
+
+    document.getElementById(
+        "editVehicleModel"
+    ).value =
+        vehicle.vehicle_model || "";
+
+
+    document.getElementById(
+        "editVehicleMessage"
+    ).textContent =
+        "";
+
+
+    document.getElementById(
+        "editVehicleModal"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+function closeEditVehicle(){
+
+    editingVehicleId =
+        null;
+
+
+    document.getElementById(
+        "editVehicleModal"
+    ).classList.add(
+        "hidden"
+    );
+
+}
+
+
+async function saveEditedVehicle(){
+
+    if(!editingVehicleId){
+
+        return;
+
+    }
+
+
+    const vehicleNumber =
+        document.getElementById(
+            "editVehicleNumber"
+        )
+        .value
+        .trim()
+        .toUpperCase();
+
+
+    const vehicleType =
+        document.getElementById(
+            "editVehicleType"
+        )
+        .value
+        .trim();
+
+
+    const vehicleModel =
+        document.getElementById(
+            "editVehicleModel"
+        )
+        .value
+        .trim();
+
+
+    const message =
+        document.getElementById(
+            "editVehicleMessage"
         );
 
 
-    if(
-        newNumber === null
-    )
-        return;
-
-
-    const newType =
-        prompt(
-
-            "Vehicle Type (Car / Bike / Scooter / Other):",
-
-            vehicle.vehicle_type ||
-            ""
-
-        );
-
-
-    if(
-        newType === null
-    )
-        return;
-
-
-    const newModel =
-        prompt(
-
-            "Vehicle Model:",
-
-            vehicle.vehicle_model ||
-            ""
-
-        );
-
-
-    if(
-        newModel === null
-    )
-        return;
+    message.textContent =
+        "Saving changes...";
 
 
     const {
-        error: updateError
+        error
     } =
         await supabaseClient
             .from("vehicles")
             .update({
 
                 vehicle_number:
-                    newNumber
-                        .trim()
-                        .toUpperCase() ||
+                    vehicleNumber ||
                     null,
 
                 vehicle_type:
-                    newType
-                        .trim() ||
+                    vehicleType ||
                     null,
 
                 vehicle_model:
-                    newModel
-                        .trim() ||
+                    vehicleModel ||
                     null
 
             })
             .eq(
                 "id",
-                vehicleId
+                editingVehicleId
             )
             .eq(
                 "user_id",
@@ -2842,17 +2991,14 @@ async function editVehicle(
             );
 
 
-    if(updateError){
+    if(error){
 
-        console.error(
-            updateError
-        );
+        console.error(error);
 
 
-        alert(
-            "Vehicle update failed: " +
-            updateError.message
-        );
+        message.textContent =
+            "Update failed: " +
+            error.message;
 
 
         return;
@@ -2860,15 +3006,22 @@ async function editVehicle(
     }
 
 
-    alert(
-        "Vehicle updated successfully."
+    message.textContent =
+        "Vehicle updated successfully.";
+
+
+    setTimeout(
+        async function(){
+
+            closeEditVehicle();
+
+            await loadDashboard();
+
+        },
+        500
     );
 
-
-    await loadDashboard();
-
 }
-
 
 
 /* =========================
