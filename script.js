@@ -86,7 +86,10 @@ form.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    /* ---------- GET VALUES ---------- */
+
+    /* =========================================
+       GET VALUES
+    ========================================= */
 
     const vehicle =
         document
@@ -113,7 +116,9 @@ form.addEventListener("submit", async function(event) {
             .value;
 
 
-    /* ---------- VALIDATE PHONE ---------- */
+    /* =========================================
+       VALIDATE PHONE
+    ========================================= */
 
     if (!/^[0-9]{10}$/.test(phone)) {
 
@@ -126,94 +131,67 @@ form.addEventListener("submit", async function(event) {
 
 
     /* =========================================
-       STEP 1: ANONYMOUS AUTH
+       STEP 1: CHECK LOGIN
     ========================================= */
 
-    /* =========================================
-   GET / CREATE USER
-========================================= */
-
-let user = null;
-
-
-/* ---------- CHECK CURRENT AUTH USER ---------- */
-
-const {
-    data: currentUserData,
-    error: currentUserError
-} = await supabaseClient.auth.getUser();
-
-
-if (!currentUserError && currentUserData?.user) {
-
-    user = currentUserData.user;
-
-}
-
-
-/* ---------- CREATE ANONYMOUS USER IF NEEDED ---------- */
-
-if (!user) {
-
     const {
-        data: authData,
-        error: authError
-    } = await supabaseClient.auth.signInAnonymously();
+        data: currentUserData,
+        error: currentUserError
+    } =
+        await supabaseClient.auth.getUser();
 
 
-    if (authError) {
+    /*
+       USER MUST BE LOGGED IN
+    */
 
-        console.error(
-            "AUTH ERROR:",
-            authError
+    if (
+        currentUserError ||
+        !currentUserData?.user ||
+        currentUserData.user.is_anonymous
+    ) {
+
+        /*
+           Save form data temporarily so it can
+           be restored after login.
+        */
+
+        sessionStorage.setItem(
+            "carconnect_pending_vehicle",
+            JSON.stringify({
+                vehicle: vehicle,
+                owner: owner,
+                phone: phone,
+                type: type
+            })
         );
 
-        alert(
-            "Account creation failed: " +
-            authError.message
-        );
+
+        /*
+           Send user to login page
+        */
+
+        window.location.href =
+            "login.html?returnTo=index.html";
 
         return;
-
     }
 
 
-    user = authData.user;
+    const user =
+        currentUserData.user;
 
-}
 
-
-/* ---------- FINAL USER CHECK ---------- */
-
-if (!user) {
-
-    alert(
-        "Unable to create user. Please try again."
+    console.log(
+        "CURRENT USER ID:",
+        user.id
     );
 
-    return;
 
-}
-
-
-console.log(
-    "CURRENT USER ID:",
-    user.id
-);
-
-console.log(
-    "ANONYMOUS USER:",
-    user.is_anonymous
-);
-
-    if (!user) {
-
-        alert(
-            "Unable to create user."
-        );
-
-        return;
-    }
+    console.log(
+        "AUTHENTICATED USER:",
+        !user.is_anonymous
+    );
 
 
     /* =========================================
@@ -233,7 +211,8 @@ console.log(
 
                     phone: phone,
 
-                    email: null
+                    email:
+                        user.email || null
                 },
                 {
                     onConflict: "id"
@@ -269,7 +248,8 @@ console.log(
             .from("vehicles")
             .insert({
 
-                user_id: user.id,
+                user_id:
+                    user.id,
 
                 vehicle_number:
                     vehicle || null,
@@ -371,6 +351,15 @@ console.log(
 
 
     /* =========================================
+       CLEAR TEMPORARY DATA
+    ========================================= */
+
+    sessionStorage.removeItem(
+        "carconnect_pending_vehicle"
+    );
+
+
+    /* =========================================
        RESULT
     ========================================= */
 
@@ -388,6 +377,7 @@ console.log(
 
 
     result.classList.remove("hidden");
+
 
     testScan.href =
         scanURL;
@@ -487,3 +477,82 @@ console.log(
     });
 
 });
+
+
+/* =========================================
+   RESTORE FORM AFTER LOGIN
+========================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const savedData =
+            sessionStorage.getItem(
+                "carconnect_pending_vehicle"
+            );
+
+
+        if (!savedData) {
+            return;
+        }
+
+
+        try {
+
+            const data =
+                JSON.parse(savedData);
+
+
+            if (data.vehicle) {
+
+                document
+                    .getElementById("vehicleNumber")
+                    .value =
+                    data.vehicle;
+
+            }
+
+
+            if (data.owner) {
+
+                document
+                    .getElementById("ownerName")
+                    .value =
+                    data.owner;
+
+            }
+
+
+            if (data.phone) {
+
+                document
+                    .getElementById("phone")
+                    .value =
+                    data.phone;
+
+            }
+
+
+            if (data.type) {
+
+                document
+                    .getElementById("vehicleType")
+                    .value =
+                    data.type;
+
+            }
+
+        }
+
+        catch(error) {
+
+            console.error(
+                "RESTORE FORM ERROR:",
+                error
+            );
+
+        }
+
+    }
+);
