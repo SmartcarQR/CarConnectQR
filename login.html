@@ -724,7 +724,28 @@
         message.className =
             "message " + type;
     }
+function redirectAfterLogin() {
 
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const returnTo =
+        params.get("returnTo");
+
+    if (returnTo) {
+
+        window.location.href =
+            returnTo;
+
+    } else {
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+}
 
     /* EMAIL TAB */
 
